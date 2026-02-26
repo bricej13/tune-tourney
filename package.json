@@ -1,0 +1,30 @@
+{
+  "name": "tune-tourney",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "typegen": "npx pocketbase-typegen --db ./pocketbase/pb_data/data.db --out ./src/models/pocketbase-types.ts"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "solid-devtools": "^0.34.5",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-solid": "^2.11.10"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "autoprefixer": "^10.4.27",
+    "daisyui": "^5.5.19",
+    "latest": "^0.2.0",
+    "pocketbase": "^0.26.8",
+    "postcss": "^8.5.6",
+    "solid-js": "^1.9.11",
+    "tailwindcss": "^4.2.1"
+  }
+}
