@@ -1,39 +1,33 @@
-import {createSignal, createRoot, onMount, createEffect} from "solid-js";
+import {createSignal, createRoot} from "solid-js";
 import pb from "../data/pb";
-import {AuthModel, RecordModel} from "pocketbase";
+import {AuthModel} from "pocketbase";
 
 function createUserStore() {
     const [user, setUser] = createSignal<AuthModel>();
+    const [avatar, setAvatar] = createSignal<string>();
 
-    pb.authStore.onChange(() => setUser(pb.authStore.model!), true)
+    pb.authStore.onChange(() => {
+        setUser(pb.authStore.record);
+        if (pb.authStore.record) {
+            setAvatar(pb.files.getURL(pb.authStore.record, pb.authStore.record.avatar))
+        } else setAvatar(undefined)
+    }, true)
 
     const loggedIn = () => !!user()
-    const login = (async (username: string, password: string): Promise<AuthModel> => {
-        const authData = await pb.collection('users').authWithPassword(
-            username,
-            password
-        );
-        return authData.record
-    });
-    const createAccount = (async (): Promise<RecordModel> => {
-        const data = {
-            "username": "test1",
-            "email": "test@example.com",
-            "emailVisibility": false,
-            "password": "Pupp1355",
-            "passwordConfirm": "Pupp13557",
-            "name": "test man"
-        };
+    const login = () => {
+        pb.collection('users').authWithOAuth2({
+            provider: 'spotify'
+        })
+    };
 
-        await pb.collection('users').create(data);
-    });
     const logout = () => {
         pb.authStore.clear()
+        setAvatar(undefined)
     };
 
 
     return {
-        user, loggedIn, login, createAccount, logout
+        user, loggedIn, login, logout, avatar
     };
 }
 
