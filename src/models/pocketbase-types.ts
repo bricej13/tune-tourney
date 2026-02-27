@@ -11,7 +11,9 @@ export enum Collections {
 	Mfas = "_mfas",
 	Otps = "_otps",
 	Superusers = "_superusers",
+	League = "league",
 	Users = "users",
+	VoteSettings = "vote_settings",
 }
 
 // Alias types for improved usability
@@ -92,10 +94,23 @@ export type SuperusersRecord = {
 	verified?: boolean
 }
 
+export type LeagueRecord = {
+	banner?: FileNameString
+	created: IsoAutoDateString
+	description?: HTMLString
+	id: string
+	members?: RecordIdString[]
+	name: string
+	owner: RecordIdString
+	private?: boolean
+	updated: IsoAutoDateString
+	vote_settings: RecordIdString
+}
+
 export type UsersRecord = {
 	avatar?: FileNameString
 	created: IsoAutoDateString
-	email: string
+	email?: string
 	emailVisibility?: boolean
 	id: string
 	name?: string
@@ -105,13 +120,27 @@ export type UsersRecord = {
 	verified?: boolean
 }
 
+export type VoteSettingsRecord = {
+	created: IsoAutoDateString
+	id: string
+	maxDownvotes?: number
+	maxSongSubmissions: number
+	maxUpvotes: number
+	nonVoterPenalty?: number
+	perSongDownvoteLimit?: number
+	perSongUpvoteLimit: number
+	updated: IsoAutoDateString
+}
+
 // Response types include system fields and match responses from the PocketBase API
 export type AuthoriginsResponse<Texpand = unknown> = Required<AuthoriginsRecord> & BaseSystemFields<Texpand>
 export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRecord> & BaseSystemFields<Texpand>
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
+export type LeagueResponse<Texpand = unknown> = Required<LeagueRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
+export type VoteSettingsResponse<Texpand = unknown> = Required<VoteSettingsRecord> & BaseSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
@@ -121,7 +150,9 @@ export type CollectionRecords = {
 	_mfas: MfasRecord
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
+	league: LeagueRecord
 	users: UsersRecord
+	vote_settings: VoteSettingsRecord
 }
 
 export type CollectionResponses = {
@@ -130,7 +161,9 @@ export type CollectionResponses = {
 	_mfas: MfasResponse
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
+	league: LeagueResponse
 	users: UsersResponse
+	vote_settings: VoteSettingsResponse
 }
 
 // Utility types for create/update operations

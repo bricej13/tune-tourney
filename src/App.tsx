@@ -1,17 +1,17 @@
 import type {Component} from 'solid-js';
-import {Navbar} from "./components/Navbar";
-
-// const fetchPosts = async () => pb.collection('posts').getList(1, 50, {
-//     filter: 'created >= "2022-01-01 00:00:00"',
-// });
+import {CreateLeagueForm} from "./components/CreateLeague";
+import {Router, Route} from "@solidjs/router";
+import {LeagueDetails} from "./pages/LeagueDetails";
+import {Leagues} from "./pages/Leagues";
+import {Layout} from "./pages/Layout";
 
 const App: Component = () => {
-    // const [posts] = createResource(fetchPosts)
-
     return (
-        <div>
-            <Navbar/>
-        </div>
+        <Router root={Layout}>
+            <Route path="/" component={Leagues} />
+            <Route path="/leagues/create" component={CreateLeagueForm} />
+            <Route path="/leagues/:id" component={LeagueDetails} />
+        </Router>
     );
 };
 

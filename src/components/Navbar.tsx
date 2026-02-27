@@ -1,13 +1,15 @@
 import userStore from "../state/userStore";
 import {Show} from "solid-js";
+import { A } from "@solidjs/router";
 
 export const Navbar = () => {
     const {user, avatar, logout, login} = userStore
 
 
-    return <div class="navbar bg-primary shadow-sm">
+    return <div class="navbar bg-primary shadow-sm text-primary-content">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl">Tunes Tourney</a>
+            <A href="/" class="btn btn-ghost text-xl">Tunes Tourney</A>
+            <A href="/leagues/create" class="btn btn-ghost btn-sm ml-4">Create League</A>
         </div>
         <Show when={user()}>
             <div class="flex-none">
