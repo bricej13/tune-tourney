@@ -12,6 +12,7 @@ export enum Collections {
 	Otps = "_otps",
 	Superusers = "_superusers",
 	League = "league",
+	Round = "round",
 	Users = "users",
 	VoteSettings = "vote_settings",
 }
@@ -107,6 +108,25 @@ export type LeagueRecord = {
 	vote_settings: RecordIdString
 }
 
+export enum RoundStatusOptions {
+	"not_started" = "not_started",
+	"accepting_submissions" = "accepting_submissions",
+	"voting" = "voting",
+	"complete" = "complete",
+}
+export type RoundRecord = {
+	created: IsoAutoDateString
+	createdBy: RecordIdString
+	description?: string
+	id: string
+	league: RecordIdString
+	order: number
+	status: RoundStatusOptions
+	title: string
+	updated: IsoAutoDateString
+	vote_settings?: RecordIdString
+}
+
 export type UsersRecord = {
 	avatar?: FileNameString
 	created: IsoAutoDateString
@@ -139,6 +159,7 @@ export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemF
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
 export type LeagueResponse<Texpand = unknown> = Required<LeagueRecord> & BaseSystemFields<Texpand>
+export type RoundResponse<Texpand = unknown> = Required<RoundRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 export type VoteSettingsResponse<Texpand = unknown> = Required<VoteSettingsRecord> & BaseSystemFields<Texpand>
 
@@ -151,6 +172,7 @@ export type CollectionRecords = {
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
 	league: LeagueRecord
+	round: RoundRecord
 	users: UsersRecord
 	vote_settings: VoteSettingsRecord
 }
@@ -162,6 +184,7 @@ export type CollectionResponses = {
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
 	league: LeagueResponse
+	round: RoundResponse
 	users: UsersResponse
 	vote_settings: VoteSettingsResponse
 }
