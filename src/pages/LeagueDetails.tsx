@@ -1,10 +1,10 @@
 import { createResource, Show, For, createSignal } from "solid-js";
-import { useParams } from "@solidjs/router";
+import { useParams, A } from "@solidjs/router";
 import pb from "../data/pb";
 import {LeagueResponse, VoteSettingsRecord, RoundResponse} from "../models/pocketbase-types";
 import {AuthRecord} from "pocketbase";
-import { AddRoundForm } from "../components/AddRoundForm";
-import { EditRoundForm } from "../components/EditRoundForm";
+import { AddRoundForm } from "../components/forms/AddRoundForm";
+import { EditRoundForm } from "../components/forms/EditRoundForm";
 
 const fetchLeague = async (id: string) : Promise<LeagueResponse> => {
     return await pb.collection('league').getOne(id, {
@@ -117,6 +117,12 @@ export const LeagueDetails = () => {
                                             <div class="collapse-content">
                                                 <p class="py-2 text-base-content/70">{round.description || 'No description provided.'}</p>
                                                 <div class="flex justify-end mt-2 gap-2">
+                                                    <A 
+                                                        href={`/leagues/${params.id}/rounds/${round.id}`}
+                                                        class="btn btn-sm btn-ghost"
+                                                    >
+                                                        Details
+                                                    </A>
                                                     <Show when={round.status === 'not_started' && round.createdBy === pb.authStore.record?.id}>
                                                         <button 
                                                             class="btn btn-sm btn-outline btn-warning"

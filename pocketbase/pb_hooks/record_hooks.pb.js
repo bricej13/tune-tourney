@@ -28,3 +28,8 @@ onRecordCreateRequest((e) => {
     
     return e.next()
 }, "round")
+
+onRecordCreateRequest((e) => {
+    e.record.set("createdBy", e.auth.id)
+    return e.next()
+}, "round_submission")

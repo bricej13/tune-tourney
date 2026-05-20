@@ -1,6 +1,7 @@
 import userStore from "../state/userStore";
 import {Show} from "solid-js";
 import { A } from "@solidjs/router";
+import {Avatar} from "./Avatar";
 
 export const Navbar = () => {
     const {user, avatar, logout, login} = userStore
@@ -15,12 +16,13 @@ export const Navbar = () => {
             <div class="flex-none">
                 <div class="dropdown dropdown-end">
                     <div tabIndex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                            <div class="mask mask-squircle w-10">
-                                <img
-                                    title={user()?.name}
-                                    alt={user()?.name}
-                                    src={avatar()}/>
-                            </div>
+                        <Avatar user={user()!} />
+                            {/*<div class="mask mask-squircle w-10">*/}
+                            {/*    <img*/}
+                            {/*        title={user()?.name}*/}
+                            {/*        alt={user()?.name}*/}
+                            {/*        src={avatar()}/>*/}
+                            {/*</div>*/}
                     </div>
                     <ul
                         tabIndex="-1"

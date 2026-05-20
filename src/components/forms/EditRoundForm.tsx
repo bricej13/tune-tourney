@@ -1,6 +1,6 @@
 import { createSignal, Show } from "solid-js";
-import pb from "../data/pb";
-import { RoundResponse } from "../models/pocketbase-types";
+import pb from "../../data/pb";
+import { RoundResponse } from "../../models/pocketbase-types";
 
 interface EditRoundFormProps {
     round: RoundResponse;

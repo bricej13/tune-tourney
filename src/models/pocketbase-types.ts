@@ -5,17 +5,20 @@
 import type PocketBase from 'pocketbase'
 import type { RecordService } from 'pocketbase'
 
-export enum Collections {
-	Authorigins = "_authOrigins",
-	Externalauths = "_externalAuths",
-	Mfas = "_mfas",
-	Otps = "_otps",
-	Superusers = "_superusers",
-	League = "league",
-	Round = "round",
-	Users = "users",
-	VoteSettings = "vote_settings",
-}
+export const Collections = {
+	Authorigins: "_authOrigins",
+	Externalauths: "_externalAuths",
+	Mfas: "_mfas",
+	Otps: "_otps",
+	Superusers: "_superusers",
+	League: "league",
+	Round: "round",
+	RoundSubmission: "round_submission",
+	SubmissionTrack: "submission_track",
+	Users: "users",
+	VoteSettings: "vote_settings",
+} as const
+export type Collections = typeof Collections[keyof typeof Collections]
 
 // Alias types for improved usability
 export type IsoDateString = string
@@ -108,12 +111,13 @@ export type LeagueRecord = {
 	vote_settings: RecordIdString
 }
 
-export enum RoundStatusOptions {
-	"not_started" = "not_started",
-	"accepting_submissions" = "accepting_submissions",
-	"voting" = "voting",
-	"complete" = "complete",
-}
+export const RoundStatusOptions = {
+	"not_started": "not_started",
+	"accepting_submissions": "accepting_submissions",
+	"voting": "voting",
+	"complete": "complete",
+} as const
+export type RoundStatusOptions = typeof RoundStatusOptions[keyof typeof RoundStatusOptions]
 export type RoundRecord = {
 	created: IsoAutoDateString
 	createdBy: RecordIdString
@@ -125,6 +129,34 @@ export type RoundRecord = {
 	title: string
 	updated: IsoAutoDateString
 	vote_settings?: RecordIdString
+}
+
+export const RoundSubmissionStateOptions = {
+	"unsubmitted": "unsubmitted",
+	"submitted": "submitted",
+} as const
+export type RoundSubmissionStateOptions = typeof RoundSubmissionStateOptions[keyof typeof RoundSubmissionStateOptions]
+export type RoundSubmissionRecord = {
+	created: IsoAutoDateString
+	createdBy: RecordIdString
+	id: string
+	round: RecordIdString
+	state?: RoundSubmissionStateOptions
+	updated: IsoAutoDateString
+	user: RecordIdString
+}
+
+export type SubmissionTrackRecord<Tspotify_payload = unknown> = {
+	album: string
+	album_art: string
+	artist: string
+	created: IsoAutoDateString
+	id: string
+	name: string
+	round_submission: RecordIdString
+	spotify_id: string
+	spotify_payload?: null | Tspotify_payload
+	updated: IsoAutoDateString
 }
 
 export type UsersRecord = {
@@ -160,6 +192,8 @@ export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemF
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
 export type LeagueResponse<Texpand = unknown> = Required<LeagueRecord> & BaseSystemFields<Texpand>
 export type RoundResponse<Texpand = unknown> = Required<RoundRecord> & BaseSystemFields<Texpand>
+export type RoundSubmissionResponse<Texpand = unknown> = Required<RoundSubmissionRecord> & BaseSystemFields<Texpand>
+export type SubmissionTrackResponse<Tspotify_payload = unknown, Texpand = unknown> = Required<SubmissionTrackRecord<Tspotify_payload>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 export type VoteSettingsResponse<Texpand = unknown> = Required<VoteSettingsRecord> & BaseSystemFields<Texpand>
 
@@ -173,6 +207,8 @@ export type CollectionRecords = {
 	_superusers: SuperusersRecord
 	league: LeagueRecord
 	round: RoundRecord
+	round_submission: RoundSubmissionRecord
+	submission_track: SubmissionTrackRecord
 	users: UsersRecord
 	vote_settings: VoteSettingsRecord
 }
@@ -185,6 +221,8 @@ export type CollectionResponses = {
 	_superusers: SuperusersResponse
 	league: LeagueResponse
 	round: RoundResponse
+	round_submission: RoundSubmissionResponse
+	submission_track: SubmissionTrackResponse
 	users: UsersResponse
 	vote_settings: VoteSettingsResponse
 }
